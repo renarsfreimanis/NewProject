@@ -1,4 +1,4 @@
-package hello;
+package main;
 import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;

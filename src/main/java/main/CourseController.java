@@ -1,12 +1,12 @@
-package hello;
+package main;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
 
-import hello.Course;
-import hello.Author;
+import main.Course;
+import main.Author;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
