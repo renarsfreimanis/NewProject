@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <form autocomplete="off" action="#" th:action="@{/course}" 
+                  th:object="${course}" method="post" class="form-horizontal"
+                  role="form">
+                <h2>Course Form</h2>
+                <div class="form-group">
+                    <div class="col-sm-9">
+                        <label>Author</label>
+                        <input type="text" th:field="*{author}" placeholder="Author Name and Last name"
+                               class="form-control"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-9">
+                        <label>Course Code</label>
+                        <input type="text" th:field="*{courseCode}"
+                               placeholder="Course Code" class="form-control"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-9">
+                    	<label>Creditpoints</label>
+                        <input type="text" th:field="*{creditpoints}" placeholder="Creditpoints"
+                               class="form-control"/> <label
+                            th:if="${#fields.hasErrors('creditpoints')}" th:errors="*{creditpoints}"
+                            class="validation-message"></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-9">
+                    	<label>Preconditions</label>
+                        <input type="text" th:field="*{preconditions}" 
+                               placeholder="Preconditions" class="form-control"/> <label
+                            th:if="${#fields.hasErrors('preconditions')}" th:errors="*{preconditions}"
+                            class="validation-message"></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-9">
+                    	<label>Course Purpose</label>
+                        <input type="text" th:field="*{coursePurpose}" 
+                               placeholder="Course Purpose" class="form-control"/> <label
+                            th:if="${#fields.hasErrors('coursePurpose')}" th:errors="*{coursePurpose}"
+                            class="validation-message"></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-9">
+                    	<label>Course Results</label>
+                        <input type="text" th:field="*{courseResults}" 
+                               placeholder="Course Results" class="form-control"/> <label
+                            th:if="${#fields.hasErrors('courseResults')}" th:errors="*{courseResults}"
+                            class="validation-message"></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-9">
+                    	<label>Permanent work</label>
+                        <input type="text" th:field="*{permanentWork}" 
+                               placeholder="Students Permanent Work" class="form-control"/> <label
+                            th:if="${#fields.hasErrors('permanentWork')}" th:errors="*{permanentWork}"
+                            class="validation-message"></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-9">
+                    	<label>Evaluation</label>
+                        <input type="text" th:field="*{evaluation}" 
+                               placeholder="Evaluation" class="form-control"/> <label
+                            th:if="${#fields.hasErrors('evaluation')}" th:errors="*{evaluation}"
+                            class="validation-message"></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-9">
+                    	<label>Course Content</label>
+                        <input type="text" th:field="*{courseContent}" 
+                               placeholder="Course Content" class="form-control"/> <label
+                            th:if="${#fields.hasErrors('courseContent')}" th:errors="*{courseContent}"
+                            class="validation-message"></label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-9">
+                        <button type="submit" class="btn btn-primary btn-block">Register Course</button>
+                    </div>
+                </div>
+
+                <h2><span class="text-success" th:utext="${successMessage}"></span></h2>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

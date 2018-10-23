@@ -6,63 +6,61 @@ import java.util.List;
 import javax.validation.Valid;
 
 import main.Course;
-import main.Author;
+//import main.Author;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class CourseController {
-	//@Autowired
-	private CoursesRepository coursesRepository;
-    private AuthorRepository authorRepository;
-	@PostMapping
-	public void createCourse(@RequestBody Course addcourse) {
-		if(addcourse.equals(null) ) {
-		addcourse = new Course((long) 10,"Vesture","Emils",113,4);
-		/*Course course1 = new Course(
-				course1.getId(),
-				course1.getAuthor(),
-				course1.getName(),
-				course1.getCoursecode(),
-				course1.getCreditpoints());*/
-			
-			coursesRepository.save(addcourse);
-			
-		}
-	}
+	
+	@Autowired
+	private CoursesRepository coursesRepo;
+	
+	@RequestMapping(value="/course", method = RequestMethod.GET)
+    public ModelAndView course(){
+        ModelAndView modelAndView = new ModelAndView();
+        Course course = new Course();
+        modelAndView.addObject("course", course);
+        modelAndView.setViewName("course");
+        return modelAndView;
+    }
 	
 
-	@RequestMapping("/Showauthors")
-	public String Showauthors(Model model){
-		//List<Course> myList = new ArrayList<>();
-		List<String> Author = new ArrayList<>();
-		List<Author> myList = (List<Author>) authorRepository.findAll();
-		for (int i =0;i<myList.size();i++) {
-           if(!Author.contains(myList.get(i).getName())) {
-        	   Author.add(myList.get(i).getName());
-           }
-		}
-		model.addAttribute("autori", Author);
-		return "form";
-	}
-}
-		
-			
-/*
-	@PostMapping("/addCourse")
-		public Course addCourse(String name, String author,int coursecode,int creditpoint) {	
-		   // Course test = new Course("Vesture","Emils",113,4);
-		    Course add = new Course(name,author,coursecode,creditpoint);
-		    return add;
-		    
-	}
-	*/
+    @RequestMapping(value = "/course", method = RequestMethod.POST)
+    public ModelAndView createNewCourse(@Valid Course course, BindingResult bindingResult) {
+        ModelAndView modelAndView = new ModelAndView();
+        Course courseExists = coursesRepo.findByCourseCode(course.getCourseCode());
+        if (courseExists != null) {
+            bindingResult
+                    .rejectValue("course_code", "error.course",
+                            "There is already a course registered with the course code provided");
+        }
+        if (bindingResult.hasErrors()) {
+            modelAndView.setViewName("course");
+        } else {
+            coursesRepo.save(course);
+            modelAndView.addObject("successMessage", "Course has been registered successfully");
+            modelAndView.addObject("course", new Course());
+            modelAndView.setViewName("course");
 
+        }
+        return modelAndView;
+    }
+    
+    /*@GetMapping(path="/allCourses")
+   	public @ResponseBody Iterable<User> getAllUsers() {
+   		return coursesRepo.findAll();
+   	}*/
+}
 

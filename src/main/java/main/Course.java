@@ -1,78 +1,158 @@
 package main;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
+
+import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
+import java.util.Set;
+
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
+@Table(name = "course")
 public class Course {
+	
 	@Id
-	 private Long id;
-	 private String name;
-	 private String author;
-	 private int coursecode;
-	 private int creditpoints;
-	 Course(Long id, String name, String author, int coursecode, int creditpoints){
-		     setId(id);
-			 setName(name);
-			 setAuthor(author);
-			 setCoursecode(coursecode);
-			 setCreditpoints(creditpoints);
-
-
+	@GeneratedValue(strategy = GenerationType.AUTO) 
+	@Column(name = "id")
+	private Long id;
+	
+	@Column(name = "author")
+	@NotEmpty(message = "*Please provide your name and last name")
+	private String author;
+	
+	@Column(name = "course_code") // Kursa kods 
+	@NotNull(message = "*Please provide course code")
+	private int courseCode;
+	
+	@Column(name = "creditpoints") // Krediitpunkti (1,2,4,8)
+	@NotNull(message = "*Please provide creditpoints for course")
+	private int creditpoints;
+	
+	@Column(name = "precondition") // Prieskshnosaciijumi kursa uzsaakshanai
+	@NotEmpty(message = "*Please provide preconditions for course")
+	private String preconditions;
+	
+	@Column(name = "course_purpose") // Kursa meerkjis
+	@NotEmpty(message = "*Please provide course purpose")
+	private String coursePurpose; 
+	
+	@Column(name = "course_results") // Studiju rezultaati
+	@NotEmpty(message = "*Please provide course results")
+	private String courseResults;
+	
+	@Column(name = "permanent_work") // Studeejoshaa pastaavigaa darba org. veids
+	@NotEmpty(message = "*Please provide students permanent work")
+	private String permanentWork;
+	
+	@Column(name = "evaluation") // Studiju rezultatu verteshana
+	@NotEmpty(message = "*Please provide course result evaluation")
+	private String evaluation;
+	
+	@Column(name = "course_content")
+	@NotEmpty(message = "*Please provide course content")
+	private String courseContent;
+	
+	public Course() {}
+	
+	public Course(String author, int courseCode, int creditpoints, String preconditions, String coursePurpose, String courseResults, String permanentWork, String evaluation, String courseContent) {
+		setAuthor(author);
+		setCourseCode(courseCode);
+		setCreditpoints(creditpoints);
+		setPreconditions(preconditions);
+		setCoursePurpose(coursePurpose);
+		setCourseResults(courseResults);
+		setPermanentWork(permanentWork);
+		setEvaluation(evaluation);
+		setCourseContent(courseContent);
 	}
+
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
-		if (id<1) {
-			id=this.id+10;
-		}
+		this.id = id;
 	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		char []ok =new char[name.length()];
-		   int counter = 0;
-		   for (int i =0; i<name.length()-4;i++){
-			  if (Character.isLetter(name.charAt(i))){
-				  ok [counter] = name.charAt(i);
-				  counter++;
-			  }
-			 name =String.valueOf(ok);
-		  }
-		
-	}
+
 	public String getAuthor() {
 		return author;
 	}
+
 	public void setAuthor(String author) {
-		char []ok =new char[author.length()];
-		   int counter = 0;
-		   for (int i =0; i<author.length();i++){
-			  if (Character.isLetter(author.charAt(i))){
-				  ok [counter] = author.charAt(i);
-				  counter++;
-			  }
-			 author =String.valueOf(ok);
-		  }
+		this.author = author;
 	}
-	public int getCoursecode() {
-		return coursecode;
+
+	public int getCourseCode() {
+		return courseCode;
 	}
-	public void setCoursecode(int coursecode) {
-		if (coursecode<0) {
-			coursecode=0;
-		}
+
+	public void setCourseCode(int courseCode) {
+		this.courseCode = courseCode;
 	}
+
 	public int getCreditpoints() {
 		return creditpoints;
 	}
+
 	public void setCreditpoints(int creditpoints) {
-		if (creditpoints<0) {
-			creditpoints=0;
-		}
-		
+		this.creditpoints = creditpoints;
 	}
+
+	public String getPreconditions() {
+		return preconditions;
 	}
+
+	public void setPreconditions(String preconditions) {
+		this.preconditions = preconditions;
+	}
+
+	public String getCoursePurpose() {
+		return coursePurpose;
+	}
+
+	public void setCoursePurpose(String coursePurpose) {
+		this.coursePurpose = coursePurpose;
+	}
+
+	public String getCourseResults() {
+		return courseResults;
+	}
+
+	public void setCourseResults(String courseResults) {
+		this.courseResults = courseResults;
+	}
+
+	public String getPermanentWork() {
+		return permanentWork;
+	}
+
+	public void setPermanentWork(String permanentWork) {
+		this.permanentWork = permanentWork;
+	}
+
+	public String getEvaluation() {
+		return evaluation;
+	}
+
+	public void setEvaluation(String evaluation) {
+		this.evaluation = evaluation;
+	}
+
+	public String getCourseContent() {
+		return courseContent;
+	}
+
+	public void setCourseContent(String courseContent) {
+		this.courseContent = courseContent;
+	}
+}

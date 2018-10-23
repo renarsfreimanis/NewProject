@@ -1,10 +1,20 @@
 package main;
 
+import main.Course;
+
 import java.util.List;
+import java.util.Optional;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface CoursesRepository extends CrudRepository<Course, Long> {
+@Repository("coursesRepository")
+public interface CoursesRepository extends JpaRepository<Course, Long> {
+	//List<Course> findByName(String name);
 	
-	List<Course> findByName(String name);
+	//Optional<Course> findById(Long id);
+	
+	Course findByCourseCode(int courseCode);
+	
+	//Course saveCourse();
 }
